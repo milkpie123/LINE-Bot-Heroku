@@ -47,9 +47,9 @@ def talk(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="你好"+user_name))
-        line_bot_api.push_message(to, TextSendMessage(text="你的UD是:"+user_id))
-        line_bot_api.push_message(to, TextSendMessage(text="帥喔"))
-        line_bot_api.push_message(to, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
+        line_bot_api.push_message(user_id, TextSendMessage(text="你的UD是:"+user_id))
+        line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
+        line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
     else:
         line_bot_api.reply_message(
             event.reply_token,
