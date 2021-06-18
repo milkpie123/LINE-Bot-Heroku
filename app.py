@@ -32,9 +32,21 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    get_message = event.message.text
+def talk(event):
+    if event.message.text == "靠北":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="我幹你娘")
+        )
+    elif event.message.text == "id":
+        # get user id when reply
+        user_id = event.source.user_id
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=str(user_id)))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
 
-    # Send To Line
-    reply = TextSendMessage(text=f"{get_message}")
-    line_bot_api.reply_message(event.reply_token, reply)
