@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
+user_id=[]
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -39,11 +40,14 @@ def talk(event):
             TextSendMessage(text="我幹你娘")
         )
     elif event.message.text == "id":
+        profile = line_bot_api.get_profile(event.source.user_id)
         # get user id when reply
+        # print(profile.user_id)
+        # print(profile.picture_url)
         user_id = event.source.user_id
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=str(user_id)))
+            TextSendMessage(text=profile.user_id))
     else:
         line_bot_api.reply_message(
             event.reply_token,
