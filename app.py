@@ -49,52 +49,52 @@ def talk(event):
             TextSendMessage(text="你好"+user_name))
         line_bot_api.push_message(user_id, TextSendMessage(text="你的UD是:"+user_id))
         line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
-        line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
+        #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
     elif event.message.text == "button":
         buttons_template = TemplateSendMessage(
-        alt_text='Buttons Template',
-        template=ButtonsTemplate(
-            title='這是ButtonsTemplate',
-            text='ButtonsTemplate可以傳送text,uri',
-            thumbnail_image_url='https://ibb.co/qB56zTF',
-            actions=[
-                MessageTemplateAction(
-                    label='ButtonsTemplate',
-                    text='ButtonsTemplate'
-                ),
-                URITemplateAction(
-                    label='VIDEO1',
-                    uri='https://www.youtube.com/watch?v=Qn8R-kgSVRU'
-                ),
-                PostbackTemplateAction(
-                    label='postback',
-                    text='postback text',
-                    data='postback1'
-                )
-            ]
+            alt_text='Buttons Template',
+            template=ButtonsTemplate(
+                title='這是ButtonsTemplate',
+                text='ButtonsTemplate可以傳送text,uri',
+                thumbnail_image_url='https://ibb.co/qB56zTF',
+                actions=[
+                    MessageTemplateAction(
+                        label='ButtonsTemplate',
+                        text='ButtonsTemplate'
+                    ),
+                    URITemplateAction(
+                        label='VIDEO1',
+                        uri='https://www.youtube.com/watch?v=Qn8R-kgSVRU'
+                    ),
+                    PostbackTemplateAction(
+                        label='postback',
+                        text='postback text',
+                        data='postback1'
+                    )
+                ]
+            )
         )
-    )
         line_bot_api.reply_message(event.reply_token, buttons_template)
-        elif event.message.text == "YN":
+    elif event.message.text == "YN":
         print("Confirm template")       
         Confirm_template = TemplateSendMessage(
-        alt_text='目錄 template',
-        template=ConfirmTemplate(
-            title='這是ConfirmTemplate',
-            text='這就是ConfirmTemplate,用於兩種按鈕選擇',
-            actions=[                              
-                PostbackTemplateAction(
-                    label='Y',
-                    text='Y',
-                    data='action=buy&itemid=1'
-                ),
-                MessageTemplateAction(
-                    label='N',
-                    text='N'
-                )
-            ]
+            alt_text='目錄 template',
+            template=ConfirmTemplate(
+                title='這是ConfirmTemplate',
+                text='這就是ConfirmTemplate,用於兩種按鈕選擇',
+                actions=[                              
+                    PostbackTemplateAction(
+                        label='Y',
+                        text='Y',
+                        data='action=buy&itemid=1'
+                    ),
+                    MessageTemplateAction(
+                        label='N',
+                        text='N'
+                    )
+                ]
+            )
         )
-    )
         line_bot_api.reply_message(event.reply_token,Confirm_template)
     else:
         line_bot_api.reply_message(
