@@ -41,13 +41,15 @@ def talk(event):
         )
     elif event.message.text == "id":
         profile = line_bot_api.get_profile(event.source.user_id)
-        # get user id when reply
-        # print(profile.user_id)
-        # print(profile.picture_url)
-        user_id = event.source.user_id
+        user_pic = profile.picture_url
+        user_id = profile.user_id
+        user_name = profile.display_name
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=profile.user_id))
+            TextSendMessage(text="你好"+user_name))
+        line_bot_api.push_message(to, TextSendMessage(text="你的UD是:"+user_id))
+        line_bot_api.push_message(to, TextSendMessage(text="帥喔"))
+        line_bot_api.push_message(to, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
     else:
         line_bot_api.reply_message(
             event.reply_token,
