@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from flask import Flask, abort, request
+from flask import Flask, abort, request, render_template
 
 # https://github.com/line/line-bot-sdk-python
 from linebot import LineBotApi, WebhookHandler
@@ -20,7 +20,7 @@ user_id=[]
 def callback():
 
     if request.method == "GET":
-        return "Hello Heroku"
+        return render_template("cover.html")
     if request.method == "POST":
         signature = request.headers["X-Line-Signature"]
         body = request.get_data(as_text=True)
@@ -31,6 +31,14 @@ def callback():
             abort(400)
 
         return "OK"
+    
+@app.route("/test") #根目錄
+def test():
+    return "This is Test"
+
+@app.route("/forms") #根目錄
+def forms():
+    return render_template("forms.html")
 
 
 @handler.add(MessageEvent, message=TextMessage)
