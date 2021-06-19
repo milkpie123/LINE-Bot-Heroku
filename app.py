@@ -48,7 +48,7 @@ def talk(event):
             event.reply_token,
             TextSendMessage(text="我幹你娘")
         )
-
+'''
     elif event.message.text == "參加":
         profile = line_bot_api.get_profile(event.source.user_id)
         user_id = profile.user_id
@@ -91,7 +91,7 @@ def talk(event):
                             else:
                                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
 
-
+'''
 
     elif event.message.text == "id":
         profile = line_bot_api.get_profile(event.source.user_id)
