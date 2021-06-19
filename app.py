@@ -101,7 +101,7 @@ def talk(event):
 #        write_json({user_id:user_name})
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
         
-    eluf event.message.text == "No":
+    elif event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
 
 
