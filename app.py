@@ -14,6 +14,18 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 user_id=[]
+def write_json(new_data, filename='data.json'):
+    with open(filename,'r+') as file:
+          # First we load existing data into a dict.
+        file_data = json.load(file)
+        # Join new_dat3a with file_data
+        file_data.update(new_data)
+        # Sets file's current position at offset.
+        file.seek(0)
+        # convert back to json.
+        json.dump(file_data, file, indent = 4)
+
+
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -43,6 +55,11 @@ def forms():
 
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    user_pic = profile.picture_url
+    user_id = profile.user_id
+    user_name = profile.display_name
+    
     if event.message.text == "靠北":
         line_bot_api.reply_message(
             event.reply_token,
@@ -58,46 +75,40 @@ def talk(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
-                a=0
-                while True:
-                    @handler.add(MessageEvent, message=TextMessage)
-                    def detail(event):
-                        user_name = event.message.text
-                        Confirm_template = TemplateSendMessage(
-                            alt_text='目錄 template',
-                            template=ConfirmTemplate(
-                                title='你確定這是你的姓名嗎?',
-                                text='別打錯字拜託',
-                                actions=[                              
-                                    PostbackTemplateAction(
-                                        label='Yes',
-                                        text='Yes',
-                                        data='action=buy&itemid=1'
-                                    ),
-                                    MessageTemplateAction(
-                                        label='N0',
-                                        text='N0'
-                                    )
-                                ]
-                            )
+                
+    elif event.message.text == "姓名":
+            user_name = event.message.text
+            Confirm_template = TemplateSendMessage(
+                alt_text='目錄 template',
+                template=ConfirmTemplate(
+                    title='你確定這是你的姓名嗎?',
+                    text='別打錯字拜託',
+                    actions=[                              
+                        PostbackTemplateAction(
+                            label='Yes',
+                            text='Yes',
+                            data='action=buy&itemid=1'
+                        ),
+                        MessageTemplateAction(
+                            label='N0',
+                            text='N0'
                         )
-                        line_bot_api.reply_message(event.reply_token,Confirm_template)
-                        @handler.add(MessageEvent, message=TextMessage)
-                        def moredetail(event):
-                            if event.message.text == "Yes":
-                                data.update({user_id:user_name})
-                                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
-                                break
-                            else:
-                                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
+                    ]
+                )
+            )
+            line_bot_api.reply_message(event.reply_token,Confirm_template)
+                       
+    elif event.message.text == "Yes":
+        
+        write_json({user_id:user_name})
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
+        break
+    eluf event.message.text == "No":
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
 
 
 
     elif event.message.text == "id":
-        profile = line_bot_api.get_profile(event.source.user_id)
-        user_pic = profile.picture_url
-        user_id = profile.user_id
-        user_name = profile.display_name
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="你好"+user_name))
