@@ -16,7 +16,7 @@ handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
 _user_id_=[]
 
 def write_json(new_data, filename='data.json'):
-    with open(filename,'r+') as file:
+    with open(filename,'r+',encoding="utf-8") as file:
           # First we load existing data into a dict.
         file_data = json.load(file)
         # Join new_dat3a with file_data
@@ -68,9 +68,9 @@ def talk(event):
         )
 
     elif event.message.text == "參加":
-        with open('information.json','r+', newline='') as jsonfile:
+        with open('information.json','r+',encoding="utf-8") as jsonfile:
             data = json.load(jsonfile)
-            if user_id in list(data):
+            if user_id in list(data["name_dict"]):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
