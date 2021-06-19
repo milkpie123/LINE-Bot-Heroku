@@ -32,7 +32,7 @@ def write_json(new_data, filename='data.json'):
 def callback():
 
     if request.method == "GET":
-        return render_template("cover.html")
+        return "Hello LineBot"
     if request.method == "POST":
         signature = request.headers["X-Line-Signature"]
         body = request.get_data(as_text=True)
@@ -44,9 +44,9 @@ def callback():
 
         return "OK"
     
-@app.route("/test") #根目錄
+@app.route("/home") #根目錄
 def test():
-    return "This is Test"
+    return render_template("cover.html")
 
 @app.route("/forms") #根目錄
 def forms():
@@ -67,15 +67,13 @@ def talk(event):
         )
 
     elif event.message.text == "參加":
-        profile = line_bot_api.get_profile(event.source.user_id)
-        user_id = profile.user_id
         with open('information.json','r+', newline='') as jsonfile:
             data = json.load(jsonfile)
             if user_id in list(data["name_dict"]):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
-                
+      
     elif event.message.text == "姓名":
             user_name = event.message.text
             Confirm_template = TemplateSendMessage(
@@ -99,10 +97,9 @@ def talk(event):
             line_bot_api.reply_message(event.reply_token,Confirm_template)
                        
     elif event.message.text == "Yes":
-        
         write_json({user_id:user_name})
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
-        break
+        
     eluf event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
 
@@ -130,7 +127,7 @@ def talk(event):
                     ),
                     URITemplateAction(
                         label='開始填寫',
-                        uri='https://nccuacct-angels.herokuapp.com/'
+                        uri='https://nccuacct-angels.herokuapp.com/home'
                     ),
                     PostbackTemplateAction(
                         label='postback',
@@ -141,6 +138,7 @@ def talk(event):
             )
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
+        
     elif event.message.text == "YN":
         print("Confirm template")       
         Confirm_template = TemplateSendMessage(
