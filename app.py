@@ -13,7 +13,8 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-user_id=[]
+_user_id_=[]
+
 def write_json(new_data, filename='data.json'):
     with open(filename,'r+') as file:
           # First we load existing data into a dict.
@@ -67,12 +68,12 @@ def talk(event):
         )
 
     elif event.message.text == "參加":
-        with open('information.json','r+', newline='') as jsonfile:
-            data = json.load(jsonfile)
-            if user_id in list(data["name_dict"]):
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
-            else:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
+#        with open('information.json','r+', newline='') as jsonfile:
+#            data = json.load(jsonfile)
+        if user_id in _user_id_:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
+        else:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
       
     elif event.message.text == "姓名":
             user_name = event.message.text
@@ -97,7 +98,7 @@ def talk(event):
             line_bot_api.reply_message(event.reply_token,Confirm_template)
                        
     elif event.message.text == "Yes":
-        write_json({user_id:user_name})
+#        write_json({user_id:user_name})
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
         
     eluf event.message.text == "No":
@@ -140,7 +141,7 @@ def talk(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
         
     elif event.message.text == "YN":
-        print("Confirm template")       
+        #print("Confirm template")       
         Confirm_template = TemplateSendMessage(
             alt_text='目錄 template',
             template=ConfirmTemplate(
