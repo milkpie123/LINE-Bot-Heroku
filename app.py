@@ -70,6 +70,34 @@ def sendresult():
     except:
         return render_template("fail.html")
 
+
+    
+    
+@handler.add(FollowEvent)
+def follow(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    #user_pic = profile.picture_url
+    user_id = profile.user_id
+    user_name = profile.display_name
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Welcome!"+ user_name))
+    Confirm_template = TemplateSendMessage(
+            alt_text='Do U want to join with us?',
+            template=ConfirmTemplate(
+                title='Do U want to join with us?',
+                text='Do U want to join with us?',
+                actions=[
+                    PostbackTemplateAction(
+                        label='Yes',
+                        text='Yes',
+                        data='action=buy&itemid=1'),
+                    MessageTemplateAction(
+                        label='N0',
+                        text='N0')]))
+    line_bot_api.push_message(user_id, Confirm_template)    
+    
+    
+    
+    
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
     profile = line_bot_api.get_profile(event.source.user_id)
@@ -83,14 +111,16 @@ def talk(event):
             TextSendMessage(text="我幹你娘")
         )
 
-    elif event.message.text == "參加":
+    elif event.message.text == "Yes":
         with open('information.json','r+',encoding="utf-8") as jsonfile:
             data = json.load(jsonfile)
             if user_id in list(data["name_dict"]):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
             else:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="請輸入你的完整姓名"))
-      
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!""))
+                line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+                
+   '''   
     elif event.message.text == "姓名":
             user_name = event.message.text
             Confirm_template = TemplateSendMessage(
@@ -112,14 +142,13 @@ def talk(event):
                 )
             )
             line_bot_api.reply_message(event.reply_token,Confirm_template)
-                       
+  
     elif event.message.text == "Yes":
         write_json({user_id:user_name})
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
-        
+     '''   
     elif event.message.text == "No":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="我幹你娘"))
-
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
 
 
     elif event.message.text == "id":
@@ -129,7 +158,7 @@ def talk(event):
         line_bot_api.push_message(user_id, TextSendMessage(text="你的UD是:"+user_id))
         line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
         #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
-    
+    '''
     elif event.message.text == "button":
         buttons_template = TemplateSendMessage(
             alt_text='Buttons Template',
@@ -177,6 +206,7 @@ def talk(event):
             )
         )
         line_bot_api.reply_message(event.reply_token,Confirm_template)
+        '''
     else:
         line_bot_api.reply_message(
             event.reply_token,
