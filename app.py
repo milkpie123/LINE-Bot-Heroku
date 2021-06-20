@@ -53,6 +53,10 @@ def test():
 def forms():
     return render_template("forms.html")
 
+@app.route("/sendresult")
+def sendresult():
+    line_bot_api.push_message("U55cce311c3805b9fa42f53867bd5d88d", TextSendMessage(text="U did it!"))
+    return render_template("home.html")
 
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
