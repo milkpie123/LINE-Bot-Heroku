@@ -6,7 +6,7 @@ from flask import Flask, abort, request, render_template
 # https://github.com/line/line-bot-sdk-python
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import *
+from linebot.models import * #import訊息模板
 #from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 
 app = Flask(__name__)
@@ -64,7 +64,7 @@ def talk(event):
             alt_text='Buttons Template',
             template=ButtonsTemplate(
                 title='這是ButtonsTemplate',
-                text='ButtonsTemplate可以傳送text,uri',
+                text='ButtonsTemplate可以傳送text,url',
                 thumbnail_image_url='https://ibb.co/qB56zTF',
                 actions=[
                     MessageTemplateAction(
