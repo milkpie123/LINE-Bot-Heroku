@@ -55,10 +55,20 @@ def forms():
 
 @app.route("/sendresult", methods=["POST"])
 def sendresult():
-    UID = request.form.get("UID")
+    User_name = request.form.get("User_name")
     content = request.form.get("content")
-    line_bot_api.push_message("U55cce311c3805b9fa42f53867bd5d88d", TextSendMessage(text=content))
-    return render_template("home.html")
+    def get_key(val):             
+        for key, value in data["name_dict"].items(): 
+            if val == value:
+                return key
+    try:
+        with open('information.json','r+',encoding="utf-8") as jsonfile:
+            data = json.load(jsonfile)
+            UID = get_key(User_name)
+            line_bot_api.push_message(UID, TextSendMessage(text=content))
+        return render_template("success.html")
+    except:
+        return render_template("fail.html")
 
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
