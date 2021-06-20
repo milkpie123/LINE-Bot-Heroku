@@ -43,10 +43,10 @@ def forms():
 
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
-    if event.message.text == "靠北":
+    if event.message.text == "早安":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="我幹你娘")
+            TextSendMessage(text="早安安")
         )
     elif event.message.text == "id":
         profile = line_bot_api.get_profile(event.source.user_id)
