@@ -114,9 +114,10 @@ def talk(event):
         with open('information.json','r+',encoding="utf-8") as jsonfile:
             data = json.load(jsonfile)
             if user_id in list(data["name_dict"]):
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加囉，趕快去看看吧!"))
+                line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
             else:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
                 line_bot_api.push_message(user_id, TextSendMessage(text='小提醒: 如果你的Line名稱不是你的本名，請先到網站左上方的選單修改姓名唷'))
                 DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a nccuacct-angels').read()[:-1]
@@ -131,11 +132,7 @@ def talk(event):
                 conn.close()
                 
     elif event.message.text == "No":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
-        
-    elif event.message.text == "test":
-        messageid = event.message.id
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=messageid))    
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))  
     
     
     elif event.message.text == "id":
