@@ -35,7 +35,7 @@ def callback():
 
     if request.method == "GET":
         return "Hello LineBot"
-    if request.method == "POST":
+    elif request.method == "POST":
         signature = request.headers["X-Line-Signature"]
         body = request.get_data(as_text=True)
 
@@ -119,17 +119,7 @@ def talk(event):
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
-                line_bot_api.push_message(user_id, TextSendMessage(text='小提醒: 如果你的Line名稱不是你的本名，請先到網站左上方的選單修改姓名唷'))
-                DATABASE_URL = os.environ['DATABASE_URL']
-                conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-                cursor = conn.cursor()
-                record = (user_id, user_name)
-                table_columns = '(user_id, username)'
-                postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
-                cursor.execute(postgres_insert_query, record)
-                conn.commit()
-                cursor.close()
-                conn.close()
+
                 
     elif event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))  
@@ -146,91 +136,5 @@ def talk(event):
         
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
-    '''
-    elif event.message.text == "button":
-        buttons_template = TemplateSendMessage(
-            alt_text='Buttons Template',
-            template=ButtonsTemplate(
-                title='這是ButtonsTemplate',
-                text='ButtonsTemplate可以傳送text,uri',
-                thumbnail_image_url='https://ibb.co/qB56zTF',
-                actions=[
-                    MessageTemplateAction(
-                        label='ButtonsTemplate',
-                        text='ButtonsTemplate'
-                    ),
-                    URITemplateAction(
-                        label='開始填寫',
-                        uri='https://nccuacct-angels.herokuapp.com/home'
-                    ),
-                    PostbackTemplateAction(
-                        label='postback',
-                        text='postback text',
-                        data='postback1'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        
-    elif event.message.text == "YN":
-        #print("Confirm template")       
-        Confirm_template = TemplateSendMessage(
-            alt_text='目錄 template',
-            template=ConfirmTemplate(
-                title='這是ConfirmTemplate',
-                text='這就是ConfirmTemplate,用於兩種按鈕選擇',
-                actions=[                              
-                    PostbackTemplateAction(
-                        label='Y',
-                        text='Y',
-                        data='action=buy&itemid=1'
-                    ),
-                    MessageTemplateAction(
-                        label='N',
-                        text='N'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token,Confirm_template)
-   
-    elif event.message.text == "姓名":
-            user_name = event.message.text
-            Confirm_template = TemplateSendMessage(
-                alt_text='目錄 template',
-                template=ConfirmTemplate(
-                    title='你確定這是你的姓名嗎?',
-                    text='別打錯字拜託',
-                    actions=[                              
-                        PostbackTemplateAction(
-                            label='Yes',
-                            text='Yes',
-                            data='action=buy&itemid=1'
-                        ),
-                        MessageTemplateAction(
-                            label='N0',
-                            text='N0'
-                        )
-                    ]
-                )
-            )
-            line_bot_api.reply_message(event.reply_token,Confirm_template)
-  
-    elif event.message.text == "Yes":
-        write_json({user_id:user_name})
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
-        
-        
-     
-     
-DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a nccuacct-angels').read()[:-1]
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cursor = conn.cursor()
-username = '孟J'
-postgres_update_query = f"""UPDATE account SET username = '劉孟頡' WHERE username = %s"""
-cursor.execute(postgres_update_query, (username,))
-conn.commit()
-     '''   
 
 
