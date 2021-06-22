@@ -134,7 +134,7 @@ def talk(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
         
     elif event.message.text == "test":
-        messageid = line_bot_api.message.id
+        messageid = event.message.id
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=messageid))    
     
     
