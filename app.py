@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-_user_id_=[]
+DATABASE_URL = os.environ['DATABASE_URL']
 
 def write_json(new_data, filename='data.json'):
     with open(filename,'r+',encoding="utf-8") as file:
