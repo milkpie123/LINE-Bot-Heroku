@@ -1,5 +1,6 @@
 import os
 import json
+import pandas as pd
 from datetime import datetime
 from flask import Flask, abort, request, render_template
 
@@ -57,15 +58,14 @@ def forms():
 def sendresult():
     User_name = request.form.get("User_name")
     content = request.form.get("content")
-    def get_key(val):             
-        for key, value in data["name_dict"].items(): 
-            if val == value:
-                return key
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    sql = "select * from account;"
+    dat = pd.read_sql_query(sql, conn)
+    conn = None
     try:
-        with open('information.json','r+',encoding="utf-8") as jsonfile:
-            data = json.load(jsonfile)
-            UID = get_key(User_name)
-            line_bot_api.push_message(UID, TextSendMessage(text=content))
+        fliter = (dat["username"]==User_name)
+        UID = dat[fliter]["user_id"][0]
+        line_bot_api.push_message(UID, TextSendMessage(text=content))
         return render_template("success.html")
     except:
         return render_template("fail.html")
