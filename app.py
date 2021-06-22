@@ -58,6 +58,7 @@ def forms():
 def sendresult():
     User_name = request.form.get("User_name")
     content = request.form.get("content")
+    DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     sql = "select * from account;"
     dat = pd.read_sql_query(sql, conn)
