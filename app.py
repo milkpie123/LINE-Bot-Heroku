@@ -1,5 +1,4 @@
 import os
-import psycopg2
 import json
 from datetime import datetime
 from flask import Flask, abort, request, render_template
@@ -14,7 +13,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-tempname=[]
+_user_id_=[]
 
 def write_json(new_data, filename='data.json'):
     with open(filename,'r+',encoding="utf-8") as file:
@@ -35,7 +34,7 @@ def callback():
 
     if request.method == "GET":
         return "Hello LineBot"
-    elif request.method == "POST":
+    if request.method == "POST":
         signature = request.headers["X-Line-Signature"]
         body = request.get_data(as_text=True)
 
@@ -70,6 +69,8 @@ def sendresult():
         return render_template("success.html")
     except:
         return render_template("fail.html")
+
+
     
     
 @handler.add(FollowEvent)
@@ -114,17 +115,15 @@ def talk(event):
         with open('information.json','r+',encoding="utf-8") as jsonfile:
             data = json.load(jsonfile)
             if user_id in list(data["name_dict"]):
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加囉，趕快去看看吧!"))
-                line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
             else:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧!"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
-
                 
     elif event.message.text == "No":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))  
-    
-    
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
+
+
     elif event.message.text == "id":
         line_bot_api.reply_message(
             event.reply_token,
@@ -136,5 +135,78 @@ def talk(event):
         
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
-
-
+    '''
+    elif event.message.text == "button":
+        buttons_template = TemplateSendMessage(
+            alt_text='Buttons Template',
+            template=ButtonsTemplate(
+                title='這是ButtonsTemplate',
+                text='ButtonsTemplate可以傳送text,uri',
+                thumbnail_image_url='https://ibb.co/qB56zTF',
+                actions=[
+                    MessageTemplateAction(
+                        label='ButtonsTemplate',
+                        text='ButtonsTemplate'
+                    ),
+                    URITemplateAction(
+                        label='開始填寫',
+                        uri='https://nccuacct-angels.herokuapp.com/home'
+                    ),
+                    PostbackTemplateAction(
+                        label='postback',
+                        text='postback text',
+                        data='postback1'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        
+    elif event.message.text == "YN":
+        #print("Confirm template")       
+        Confirm_template = TemplateSendMessage(
+            alt_text='目錄 template',
+            template=ConfirmTemplate(
+                title='這是ConfirmTemplate',
+                text='這就是ConfirmTemplate,用於兩種按鈕選擇',
+                actions=[                              
+                    PostbackTemplateAction(
+                        label='Y',
+                        text='Y',
+                        data='action=buy&itemid=1'
+                    ),
+                    MessageTemplateAction(
+                        label='N',
+                        text='N'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token,Confirm_template)
+   
+    elif event.message.text == "姓名":
+            user_name = event.message.text
+            Confirm_template = TemplateSendMessage(
+                alt_text='目錄 template',
+                template=ConfirmTemplate(
+                    title='你確定這是你的姓名嗎?',
+                    text='別打錯字拜託',
+                    actions=[                              
+                        PostbackTemplateAction(
+                            label='Yes',
+                            text='Yes',
+                            data='action=buy&itemid=1'
+                        ),
+                        MessageTemplateAction(
+                            label='N0',
+                            text='N0'
+                        )
+                    ]
+                )
+            )
+            line_bot_api.reply_message(event.reply_token,Confirm_template)
+  
+    elif event.message.text == "Yes":
+        write_json({user_id:user_name})
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
+     '''   
