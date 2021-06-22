@@ -120,7 +120,7 @@ def talk(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
                 line_bot_api.push_message(user_id, TextSendMessage(text='小提醒: 如果你的Line名稱不是你的本名，請先到網站左上方的選單修改姓名唷'))
-                DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a nccuacct-angels').read()[:-1]
+                DATABASE_URL = os.environ['DATABASE_URL']
                 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
                 cursor = conn.cursor()
                 record = (user_id, user_name)
