@@ -119,6 +119,15 @@ def talk(event):
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+                conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+                cursor = conn.cursor()
+                record = (user_id, user_name)
+                table_columns = '(user_id, username)'
+                postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
+                cursor.execute(postgres_insert_query, record)
+                conn.commit()
+                cursor.close()
+                conn.close()
                 
     elif event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
