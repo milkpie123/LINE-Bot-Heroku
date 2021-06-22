@@ -1,4 +1,5 @@
 import os
+import psycopg2
 import json
 from datetime import datetime
 from flask import Flask, abort, request, render_template
@@ -13,7 +14,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-_user_id_=[]
+tempname=[]
 
 def write_json(new_data, filename='data.json'):
     with open(filename,'r+',encoding="utf-8") as file:
@@ -69,8 +70,6 @@ def sendresult():
         return render_template("success.html")
     except:
         return render_template("fail.html")
-
-
     
     
 @handler.add(FollowEvent)
@@ -119,11 +118,26 @@ def talk(event):
             else:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!"))
                 line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+                line_bot_api.push_message(user_id, TextSendMessage(text='小提醒: 如果你的Line名稱不是你的本名，請先到網站左上方的選單修改姓名唷'))
+                DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a nccuacct-angels').read()[:-1]
+                conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+                cursor = conn.cursor()
+                record = (user_id, user_name)
+                table_columns = '(user_id, username)'
+                postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
+                cursor.execute(postgres_insert_query, record)
+                conn.commit()
+                cursor.close()
+                conn.close()
                 
     elif event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
-
-
+        
+    elif event.message.text == "test":
+        messageid = line_bot_api.message.id
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=messageid))    
+    
+    
     elif event.message.text == "id":
         line_bot_api.reply_message(
             event.reply_token,
@@ -209,6 +223,17 @@ def talk(event):
     elif event.message.text == "Yes":
         write_json({user_id:user_name})
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功"))
+        
+        
+     
+     
+DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a nccuacct-angels').read()[:-1]
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cursor = conn.cursor()
+username = '孟J'
+postgres_update_query = f"""UPDATE account SET username = '劉孟頡' WHERE username = %s"""
+cursor.execute(postgres_update_query, (username,))
+conn.commit()
      '''   
 
 
