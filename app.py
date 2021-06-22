@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = "postgres://jdvkslijzjpqwz:c759ec927c436cfa76cf2ba29132b87d4492bbb9a6708cbf544635e0c8624aad@ec2-3-212-75-25.compute-1.amazonaws.com:5432/ddu81jcqpe3o4m"
 
 def write_json(new_data, filename='data.json'):
     with open(filename,'r+',encoding="utf-8") as file:
@@ -58,7 +58,6 @@ def forms():
 def sendresult():
     User_name = request.form.get("User_name")
     content = request.form.get("content")
-    DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     sql = "select * from account;"
     dat = pd.read_sql_query(sql, conn)
