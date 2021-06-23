@@ -134,7 +134,10 @@ def talk(event):
             groupid = event.source.groupId
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=groupid))
         except:
-            pass
+            roomid = event.source.roomId
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=roomid))
+            
+            
 
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
