@@ -130,8 +130,11 @@ def talk(event):
         #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
     
     elif event.message.text == "test":
-        messageid = event.message.id
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=messageid))
+        try:
+            groupid = event.source.groupId
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=groupid))
+        except:
+            pass
 
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
