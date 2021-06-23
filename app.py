@@ -58,20 +58,6 @@ def sendresult():
     except:
         return render_template("fail.html")
 
-
-
-    
-@handler.add(JoinEvent)
-def join(event):
-    try:
-        groupid = event.source.groupId
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="your groupId is:"+ groupid))
-    except:
-        roomid = event.source.roomId
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="your roomId is: "+ roomid)) 
-    
-    
-    
     
 @handler.add(FollowEvent)
 def follow(event):
