@@ -98,17 +98,22 @@
           <p class="lead">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
           <p class="lead">什麼都可以說!!!</p>
           <label for="exampleInputEmail1" class="form-label">想跟誰說？</label>
-          <input type="text" class="form-control" id="namehere" required name="User_name">
+          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="d" method="GET" required action="/">
+            <option selected>請選擇傳送對象</option>
+          {% for x, y in table %}
+            <option value="{{ x }}">{{ y }}</option>
+          {% endfor %}
+          </select>
           <div id="note1" class="form-text">請填寫完整姓名!</div>
         </div>
 
         <div class="mb-3">
           <label for="exampleFormControlTextarea1">說什麼？</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" required></textarea>
         </div>
 
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
           <label class="form-check-label" for="exampleCheck1">我不是來亂的</label>
         </div>
         <button type="submit" class="btn btn-primary">確認送出</button>
