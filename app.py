@@ -58,6 +58,18 @@ def sendresult():
         return render_template("fail.html")
 
 
+
+    
+@handler.add(JoinEvent)
+def join(event):
+    try:
+        groupid = event.source.groupId
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="your groupId is:"+ groupid))
+    except:
+        roomid = event.source.roomId
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="your roomId is: "+ roomid)) 
+    
+    
     
     
 @handler.add(FollowEvent)
@@ -128,16 +140,6 @@ def talk(event):
         line_bot_api.push_message(user_id, TextSendMessage(text="你的User ID是:"+user_id))
         line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
         #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
-    
-    elif event.message.text == "test":
-        try:
-            groupid = event.source.groupId
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=groupid))
-        except:
-            roomid = event.source.roomId
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=roomid))
-            
-            
 
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
