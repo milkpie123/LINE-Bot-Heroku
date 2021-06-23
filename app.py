@@ -49,15 +49,9 @@ def forms():
 
 @app.route("/sendresult", methods=["POST"])
 def sendresult():
-    User_name = request.form.get("User_name")
+    UID = request.form.get("UID")
     content = request.form.get("content")
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-    sql = "select * from account;"
-    dat = pd.read_sql_query(sql, conn)
-    conn = None
     try:
-        fliter = (dat["username"]==User_name)
-        UID = dat[fliter]["user_id"][0]
         line_bot_api.push_message(UID, TextSendMessage(text=content))
         return render_template("success.html")
     except:
