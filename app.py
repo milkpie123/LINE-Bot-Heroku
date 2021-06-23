@@ -38,9 +38,14 @@ def callback():
 def test():
     return render_template("cover.html")
 
-@app.route("/forms") #根目錄
+@app.route("/forms", methods=['GET']) #根目錄
 def forms():
-    return render_template("forms.html")
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    sql = "select * from account;"
+    dat = pd.read_sql_query(sql, conn)
+    conn = None
+    table = zip(dat["user_id"], dat["username"])
+    return render_template("forms.html", table=table)
 
 @app.route("/sendresult", methods=["POST"])
 def sendresult():
