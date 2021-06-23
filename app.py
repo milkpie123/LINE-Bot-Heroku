@@ -65,7 +65,6 @@ def follow(event):
     user_pic = profile.picture_url
     user_id = profile.user_id
     user_name = profile.display_name
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Welcome!"+user_name))
     Confirm_template = TemplateSendMessage(
             alt_text='Do U want to join with us?',
             template=ConfirmTemplate(
@@ -79,7 +78,7 @@ def follow(event):
                     MessageTemplateAction(
                         label='N0',
                         text='N0')]))
-    line_bot_api.push_message(user_id, Confirm_template)    
+    line_bot_api.reply_message(event.reply_token,Confirm_template)    
     
     
     
@@ -103,10 +102,10 @@ def talk(event):
         dat = pd.read_sql_query(sql, conn)
         if user_id in dat["user_id"].tolist():
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加囉，趕快去看看吧！"))
-            line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+            #line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
         else:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧！"))
-            line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+            #line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
             cursor = conn.cursor()
             record = (user_id, user_name)
             table_columns = '(user_id, username)'
@@ -121,11 +120,9 @@ def talk(event):
 
 
     elif event.message.text == "id":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="你好"+user_name))
-        line_bot_api.push_message(user_id, TextSendMessage(text="你的User ID是:"+user_id))
-        line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你的User ID是:"+user_id))
+        #line_bot_api.push_message(user_id, TextSendMessage(text="你的User ID是:"+user_id))
+        #line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
         #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
 
     else:
