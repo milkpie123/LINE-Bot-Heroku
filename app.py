@@ -1,5 +1,4 @@
 import os
-import json
 import pandas as pd
 import psycopg2
 from datetime import datetime
@@ -15,20 +14,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-DATABASE_URL = "postgres://jdvkslijzjpqwz:c759ec927c436cfa76cf2ba29132b87d4492bbb9a6708cbf544635e0c8624aad@ec2-3-212-75-25.compute-1.amazonaws.com:5432/ddu81jcqpe3o4m"
-
-def write_json(new_data, filename='data.json'):
-    with open(filename,'r+',encoding="utf-8") as file:
-          # First we load existing data into a dict.
-        file_data = json.load(file)
-        # Join new_dat3a with file_data
-        file_data.update(new_data)
-        # Sets file's current position at offset.
-        file.seek(0)
-        # convert back to json.
-        json.dump(file_data, file, indent = 4)
-
-
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -113,22 +99,23 @@ def talk(event):
         )
 
     elif event.message.text == "Yes":
-        with open('information.json','r+',encoding="utf-8") as jsonfile:
-            data = json.load(jsonfile)
-            if user_id in list(data["name_dict"]):
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加了"))
-            else:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快到來看看吧!"))
-                line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
-                conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-                cursor = conn.cursor()
-                record = (user_id, user_name)
-                table_columns = '(user_id, username)'
-                postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
-                cursor.execute(postgres_insert_query, record)
-                conn.commit()
-                cursor.close()
-                conn.close()
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        sql = "select * from account;"
+        dat = pd.read_sql_query(sql, conn)
+        if user_id in dat["user_id"].tolist():
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你已經參加囉，趕快去看看吧！"))
+            line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+        else:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快來看看吧！"))
+            line_bot_api.push_message(user_id, TextSendMessage(text='https://nccuacct-angels.herokuapp.com/home'))
+            cursor = conn.cursor()
+            record = (user_id, user_name)
+            table_columns = '(user_id, username)'
+            postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
+            cursor.execute(postgres_insert_query, record)
+            conn.commit()
+            cursor.close()
+            conn.close()
                 
     elif event.message.text == "No":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="OK, remember U can join anytime u want~"))
@@ -141,8 +128,11 @@ def talk(event):
         line_bot_api.push_message(user_id, TextSendMessage(text="你的User ID是:"+user_id))
         line_bot_api.push_message(user_id, TextSendMessage(text="帥喔"))
         #line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=user_pic, preview_image_url=user_pic))
-        
-        
+    
+    elif event.message.text == "test":
+        messageid = event.message.id
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=messageid))
+
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="Anything?"))
     '''
