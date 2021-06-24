@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.83.1">
-    <title>Sticky Footer Navbar Template · Bootstrap v5.0</title>
+    <title>ACCT Angels</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/">
 
@@ -46,32 +46,14 @@
     <!-- Custom styles for this template -->
     <link href="sticky-footer-navbar.css" rel="stylesheet">
   </head>
-  <body class="d-flex flex-column h-100">
-    
+<body class="d-flex flex-column h-100">
 <header>
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Fixed navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <a class="navbar-brand" href="/home">Home</a>
+      
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
@@ -89,25 +71,27 @@
 
 
 <form action="/sendresult" method="POST">
-  <div class=”container”>
+  <div class="container">
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
         <h1 class="mb-3">填寫匿名祝福</h1>
         <div class="mb-3">
-          <p class="lead">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
-          <p class="lead">什麼都可以說!!!</p>
-          <label for="exampleInputEmail1" class="form-label">想跟誰說？</label>
+          <p class="lead">注意事項：</p>
+          <p>1.只有「已經加入活動帳號Line好友」的人會出現在列表中喔！</p>
+          <p>2.列表中顯示的是對方Line的名稱。</p>
+          <p>3.訊息會透過活動帳號直接傳送到對方的Line裡面。</p>
+          <p>4.不可以罵人喔～～～</p>
+          <label for="exampleInputEmail1" class="form-label text-primary">想跟誰說？</label>
           <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="UID" method="GET" required action="/">
             <option selected>請選擇傳送對象</option>
           {% for x, y in table %}
             <option value="{{ x }}">{{ y }}</option>
           {% endfor %}
           </select>
-          <div id="note1" class="form-text">請填寫完整姓名!</div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-primary">
           <label for="exampleFormControlTextarea1">說什麼？</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" required></textarea>
         </div>
@@ -124,15 +108,7 @@
   
 </form>
 
-
-<footer class="footer mt-auto py-3 bg-light">
-  <div class="container">
-    <span class="text-muted">Place sticky footer content here.</span>
-  </div>
-</footer>
-
-
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-      
+  </div> 
   </body>
 </html>
