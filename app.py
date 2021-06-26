@@ -136,7 +136,7 @@ def talk(event):
         try:
             conn = psycopg2.connect(DATABASE_URL, sslmode='require')
             cursor = conn.cursor()
-            cursor.execute(f"""DELETE FROM account WHERE user_id = {user_id};""")
+            cursor.execute("DELETE FROM account WHERE user_id = '%s';" %user_id)
             conn.commit()
             cursor.close()
             conn.close()
