@@ -7,7 +7,7 @@ from flask import Flask, abort, request, render_template
 # https://github.com/line/line-bot-sdk-python
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import *
+from linebot.models import * #import訊息模板
 #from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage
 
 app = Flask(__name__)
@@ -112,92 +112,10 @@ def follow(event):
     
 @handler.add(MessageEvent, message=TextMessage)
 def talk(event):
-    profile = line_bot_api.get_profile(event.source.user_id)
-    #user_pic = profile.picture_url
-    user_id = profile.user_id
-    user_name = profile.display_name
-    
-    if event.message.text == "加入":
-        try:
-            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-            cursor = conn.cursor()
-            record = (user_id, user_name)
-            table_columns = '(user_id, username)'
-            postgres_insert_query = f"""INSERT INTO account {table_columns} VALUES (%s, %s);"""
-            cursor.execute(postgres_insert_query, record)
-            conn.commit()
-            cursor.close()
-            conn.close()
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快去玩看看吧！"))
-        except:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="參加成功，趕快去玩看看吧！"))
-                
-    elif event.message.text == "退出":
-        try:
-            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM account WHERE user_id = '%s';" %user_id)
-            conn.commit()
-            cursor.close()
-            conn.close()
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你不會再收到訊息(除了今天已經填寫的)，你可以隨時輸入「加入」重新參與。"))
-        except:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你不會再收到訊息(除了今天已經填寫的)，你可以隨時輸入「加入」重新參與。"))
-
-    else:
-        n = randint(0,13)
-        if n == 0:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰是報告特別carry的神隊友？"))
-        elif n == 1:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰是幹話大王？"))
-        elif n == 2:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰是跟你莫名其妙就變熟的？"))
-        elif n == 3:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你大學認識的第一個人是誰？"))
-        elif n == 4:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你知道會計五帥嗎？"))
-        elif n == 5:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你最喜歡的系上活動是什麼？"))
-        elif n == 6:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰都不去上課？"))
-        elif n == 7:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰都說自己沒讀書但還是考很好？"))
-        elif n == 8:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你覺得大學4年誰改變最多？"))
-        elif n == 9:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="你覺得系上誰最熱心助人？"))
-        elif n == 10:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰是專門搞事的雷組員？"))
-        elif n == 11:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰有深藏不漏的特殊才藝？"))
-        elif n == 12:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="還沒跟誰好好道別/說謝謝嗎？"))
-        elif n == 13:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="誰特別難揪？"))
-        
-
-   
-'''
-Confirm_template = TemplateSendMessage(
-        alt_text='Do U want to join with us?',
-        template=ConfirmTemplate(
-            title='Do U want to join with us?',
-            text='Do U want to join with us?',
-            actions=[
-                PostbackTemplateAction(
-                    label='Yes',
-                    text='Yes',
-                    data='action=buy&itemid=1'),
-                MessageTemplateAction(
-                    label='No',
-                    text='No')]))
-line_bot_api.reply_message(event.reply_token,Confirm_template)    
-'''
-'''
-    if event.message.text == "靠北":
+    if event.message.text == "早安":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="我幹你娘")
+            TextSendMessage(text="早安安")
         )
     elif event.message.text == "Yes":
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -227,7 +145,7 @@ line_bot_api.reply_message(event.reply_token,Confirm_template)
             alt_text='Buttons Template',
             template=ButtonsTemplate(
                 title='這是ButtonsTemplate',
-                text='ButtonsTemplate可以傳送text,uri',
+                text='ButtonsTemplate可以傳送text,url',
                 thumbnail_image_url='https://ibb.co/qB56zTF',
                 actions=[
                     MessageTemplateAction(
