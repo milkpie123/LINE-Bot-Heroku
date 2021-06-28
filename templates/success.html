@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-  <title>ACCT Angles</title>
-  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon" />
-</head>
-<body>
-  <div class="container">
-    <h1 class="mt-5">Sent Successfully!</h1>
-    <p class="lead">U can go previous page and write down another message.</p>
-    <a class="btn btn-secondary btn-lg" href="forms" role="button">回前頁</a>
-</div>
-</body>
+    <head>
+        <title>2021 政大會計傳情小天使</title> 
+        <!--<link rel="icon" href="favicon.png" sizes="16x16">-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <div id="wrapper_for_sticky_footer">
+            <div class="img-mobile">
+                <img src="assets/star-left.png" alt="star" class="img-star-left">
+                <img src="assets/star-right.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-success-mobile.png" alt="background" class="bg-success-mobile">
+            </div>
+
+            <div class="img-tablet">
+                <img src="assets/star-left-web.png" alt="star" class="img-star-left">
+                <img src="assets/star-right-web.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-success-tablet.png" alt="background" class="bg-success-tablet">
+            </div>
+
+            <div class="img-web">
+                <img src="assets/star-left-web.png" alt="star" class="img-star-left">
+                <img src="assets/star-right-web.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-success-web.png" alt="background" class="bg-success-web">
+            </div>
+
+        <section id="success" class="flexbox-vertical center-aligned">
+            <img src="assets/angel-light.gif" alt="angel" class="img-mobile gif-angel" style="z-index: -1;">
+            <img src="assets/angel-light.gif" alt="angel" class="img-tablet gif-angel" style="z-index: -1;">
+            <img src="assets/angel-light.gif" alt="angel" class="img-web gif-angel" style="z-index: -1;">
+            <h1>已收到內容！</h1>
+            <p style="position: relative; top: -30px; text-align: center;">
+              小天使統一會在<br>
+              每天晚上21:00將您的話語寄出喔
+            </p>
+            <div class="flexbox-horizontal-button">
+              <button class="button-yellow" onclick="window.location.href='forms.html'">我還要再傳情！</button>
+              <button class="button-white" onclick="window.location.href='cover.html'">回到首頁</button>
+            </div>
+        </section>
+        </div>
+
+          <footer class="flexbox-horizontal">
+              <div class="flexbox-vertical" style="align-items: flex-start;">
+                <tiny>@NCCU ACCT 2021</tiny>>
+                <tiny style="position: relative; top: -10px;">By MengChiehLiu  |  Lili Lin</tiny>
+              </div>
+              <img src="assets/icon-github.png" alt="icon-github" class="icon-github">
+          </footer>
+    </body>
 </html>

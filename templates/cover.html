@@ -1,68 +1,149 @@
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.83.1">
-    <title>ACCT Angels</title>
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <title>2021 政大會計傳情小天使</title> 
+        <!--<link rel="icon" href="favicon.png" sizes="16x16">-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper_for_sticky_footer">
+        <div id="bg">
+            <div class="img-mobile">
+                <img src="assets/star-left.png" alt="star" class="img-star-left">
+                <img src="assets/star-right.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-1.png" class="bg-cloud" style="z-index: -2;">
+                <img src="assets/cloud-2.png" class="bg-cloud" style="z-index: -3;">
+            </div>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
-    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon" />
-    
+            <div class="img-tablet">
+                <img src="assets/star-left-web.png" alt="star" class="img-star-left">
+                <img src="assets/star-right-web.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-1.png" class="bg-cloud" style="z-index: -2;">
+                <img src="assets/cloud-2.png" class="bg-cloud-web" style="z-index: -3;">
+            </div>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+            <div class="img-web">
+                <img src="assets/star-left-web.png" alt="star" class="img-star-left">
+                <img src="assets/star-right-web.png" alt="star" class="img-star-right">
+                <img src="assets/cloud-web.png" alt="bg-cloud" class="bg-cloud-web">
+            </div>
+        </div>
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
+        <section id="intro" class="flexbox-vertical">
+            <h1>政大會計<br>畢業傳情</h1>
+            <p style="width: 74%; height: auto;">
+                疫情來的太突然，不知道大家有沒有什麼話是來不及對某人說出口，或是不敢在當面表達的呢?
+            </p>
+            <div class="box-blue flexbox-vertical">
+                <p style="width: 94%; margin-left: auto; margin-right: auto;">
+                    我們製作了一個<span style="color: #FFE382;">匿名</span>的畢業祝福網站，
+                    大家可以在這留下想對某人說的話，小天使就會將訊息整理成字卡後匿名寄給對方！
+                </p>
+            </div>
+            <button class="button-yellow" onclick="window.location.href='forms.html'">我要傳情</button>
+            <br>
+            <div id="scroll-more" class="flexbox-vertical flexbox-horizontal-web">
+                <small style="margin-bottom: 8px;">真的嗎？好有趣！！</small>
+                <img src="assets/arrow-down.png" alt="scroll down" class="img-scroll-down">
+            </div>
+        </section>
+            
+        <section id="character" class="tag flexbox-vertical flexbox-horizontal-web">
+            <div>
+                <img src="assets/speech-bubble.png" alt="speech-bubble" class="img-speech-bubble img-mobile">
+                <img src="assets/speech-bubble.png" alt="speech-bubble" class="img-speech-bubble img-tablet">
+                <img src="assets/speech-bubble-web.png" alt="speech-bubble" class="img-speech-bubble img-web">
+                <small class="message">
+                    Hi! 我是傳情小天使小計<br>
+                    傳信的工作就交給我吧！
+                </small>
+            </div>
+            <img src="assets/angel.gif" alt="angel" class="img-mobile gif-angel" style="position: relative; top: -18px; z-index: -1;">
+            <img src="assets/angel.gif" alt="angel" class="img-tablet gif-angel" style="position: relative; top: -18px; z-index: -1;">
+            <img src="assets/angel-dark.gif" class="img-web gif-angel">
+        </section>
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+        <section id="facts" class="tag center-aligned flexbox-vertical flexbox-horizontal-web">
+            <div class="flexbox-vertical flexbox-vertical-web facts-container">
+                <img src="assets/img-mail.png" alt="img-mail" class="icon">
+                <h3>用 LINE 傳信</h3>
+                <p class="facts-content">
+                    送信、收信皆從Line官方帳號進行，請先加好友才能參加傳情，收信者也僅限有加好友者。
+                </p>
+            </div>
+            <div class="flexbox-vertical flexbox-vertical-web facts-container">
+                <img src="assets/img-anonymous.png" alt="img-anonymous" class="icon">
+                <h3>保證匿名</h3>
+                <p class="facts-content">
+                    由小計負責傳送訊息，訊息中絕對不會紀錄你的真實姓名。（但不保證收信者不會猜到喔）
+                </p>
+            </div>
+            <div class="flexbox-vertical flexbox-vertical-web facts-container">
+                <img src="assets/img-mailbox.png" alt="img-mailbox" class="icon">
+                <h3>準時出動</h3>
+                <p class="facts-content">
+                    每晚九點小計會準時出發送信，大家可以在這個時間關注自己呢聊天室喔～
+                </p>
+            </div>
+        </section>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="cover.css" rel="stylesheet">
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">ACCT Angels 政大會計畢業傳情</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a href="https://lin.ee/J7BhtIi"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
-      </nav>
-    </div>
-  </header>
+        <section id="faq" class="tag flexbox-vertical">
+            <h2>我有問題 &#9995;</h2>
+            <div id="q-1" class="faq-question flexbox-horizontal">
+                <div class="flexbox-horizontal">
+                    <p style="margin-right: 10px;">Q1.</p>
+                    <p>只有對方能看到我的訊息嗎？</p>
+                </div>
+                <img src="assets/icon-expand.png" alt="icon-expand" class="icon-expand">
+            </div>
+            <div id="ans-1" class="faq-answer">
+                <small>
+                    是的～因為在後台的資料保存也小於一天，因此這封信的內容只有你們兩個知道喔。
+                </small>
+            </div>
+            <hr>
+            <div id="q-2" class="faq-question flexbox-horizontal">
+                <div class="flexbox-horizontal">
+                    <p style="margin-right: 10px;">Q2.</p>
+                    <p>訊息的紀錄會保留多久呢？</p>
+                </div>
+                <img src="assets/icon-expand.png" alt="icon-expand" class="icon-expand">
+            </div>
+            <div id="ans-2" class="faq-answer">
+                <small>
+                    後端所有資料僅保存半年，不過Line內收到的訊息並不會消失喔！
+                </small>
+            </div>
+            <hr>
+            <div id="q-3" class="faq-question flexbox-horizontal">
+                <div class="flexbox-horizontal">
+                    <p style="margin-right: 10px;">Q3.</p>
+                    <p>想說什麼都可以嗎？</p>
+                </div>
+                <img src="assets/icon-expand.png" alt="icon-expand" class="icon-expand">
+            </div>
+            <div id="ans-3" class="faq-answer">
+                <small>
+                    不是！可以留下祝福的話，勉勵的話，說不出口的話，但是謾罵與所有傷害人的話請不要亂發送！雖然是匿名的但還是要負起相對的責任喔👀
+                </small>
+            </div>
+            <br>
+            <button class="button-yellow" onclick="window.location.href='forms.html'">我要傳情</button>
+        </section>
 
-  <main class="px-3">
-    <h1>畢業快樂</h1>
-    <h1>Happy Graduation!</h1>
-    <p class="lead">疫情來的太突然，不知道大家有沒有什麼話是來不及對某人說出口，或是在不敢當面說出口的呢，我們製作了一個匿名的畢業祝福網站，大家可以把想對某人說的話留在這邊，網站會將訊息整理成字卡後寄給那個人，不用註冊，網站跟後臺也不會留下紀錄。</p>
-    <p class="lead">
-        <a class="btn btn-secondary btn-lg" href="forms" role="button">開始</a>
-    </p>
-  </main>
-
-  <footer class="mt-auto text-white-50">
-    <p>Created by MengChieh Liu, Lili Lin｜2021</p>
-    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-  </footer>
-</div>
-
-
-    
-  </body>
+        </div>
+        <footer class="flexbox-horizontal">
+            <div class="flexbox-vertical" style="align-items: flex-start;">
+                <tiny>@NCCU ACCT 2021</tiny>>
+                <tiny style="position: relative; top: -10px;">By MengChiehLiu  |  Lili Lin</tiny>
+            </div>
+            <img src="assets/icon-github.png" alt="icon-github" class="icon-github">
+        </footer>
+    </body>
+    <script src="script.js"></script>
 </html>
